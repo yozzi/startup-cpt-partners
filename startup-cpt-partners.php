@@ -52,7 +52,7 @@ function startup_reloaded_partners() {
 	$args = array(
 		'label'               => __( 'partners', 'text_domain' ),
 		'labels'              => $labels,
-		'supports'            => array( 'title', 'editor', 'revisions' ),
+		'supports'            => array( 'title', 'revisions' ),
 		'hierarchical'        => true,
 		'public'              => true,
 		'show_ui'             => true,
@@ -100,4 +100,44 @@ function startup_reloaded_partners_caps() {
 }
 
 register_activation_hook( __FILE__, 'startup_reloaded_partners_caps' );
+
+// Metaboxes
+function startup_reloaded_partners_meta() {
+    
+	// Start with an underscore to hide fields from custom fields list
+	$prefix = '_startup_reloaded_partners_';
+
+	$cmb_box = new_cmb2_box( array(
+		'id'            => $prefix . 'metabox',
+		'title'         => __( 'Partner details', 'cmb2' ),
+		'object_types'  => array( 'partners' )
+	) );
+    
+    $cmb_box->add_field( array(
+        'name' => __( 'Show title', 'cmb2' ),
+		'id'               => $prefix . 'title',
+		'type'             => 'checkbox',
+        'default'          => 0
+	) );
+    
+    $cmb_box->add_field( array(
+        'name' => __( 'Partner\'s logo', 'cmb2' ),
+		'id'   => $prefix . 'logo',
+		'type' => 'file',
+        // Optionally hide the text input for the url:
+        'options' => array(
+            'url' => false,
+        ),
+	) );
+    
+    $cmb_box->add_field( array(
+		'name' => __( 'External url', 'cmb2' ),
+		'desc' => __( 'Link to te partner\'s website', 'startup-reloaded-products' ),
+		'id'   => $prefix . 'url',
+		'type' => 'text_url'
+	) );
+
+}
+
+add_action( 'cmb2_init', 'startup_reloaded_partners_meta' );
 ?>

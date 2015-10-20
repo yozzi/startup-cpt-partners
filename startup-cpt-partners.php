@@ -113,12 +113,12 @@ function startup_reloaded_partners_meta() {
 		'object_types'  => array( 'partners' )
 	) );
     
-    $cmb_box->add_field( array(
-        'name' => __( 'Show title', 'cmb2' ),
-		'id'               => $prefix . 'title',
-		'type'             => 'checkbox',
-        'default'          => 0
-	) );
+//    $cmb_box->add_field( array(
+//        'name' => __( 'Show title', 'cmb2' ),
+//		'id'               => $prefix . 'title',
+//		'type'             => 'checkbox',
+//        'default'          => 0
+//	) );
     
     $cmb_box->add_field( array(
         'name' => __( 'Partner\'s logo', 'cmb2' ),

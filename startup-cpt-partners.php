@@ -140,4 +140,11 @@ function startup_reloaded_partners_meta() {
 }
 
 add_action( 'cmb2_init', 'startup_reloaded_partners_meta' );
+
+// Shortcode
+add_shortcode( 'partners', function( $atts, $content= null ){
+    ob_start();
+    require get_template_directory() . '/inc/shortcodes/partners.php';
+    return ob_get_clean();
+});
 ?>

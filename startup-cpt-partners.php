@@ -139,7 +139,7 @@ function startup_reloaded_partners_meta() {
 
 }
 
-add_action( 'cmb2_init', 'startup_reloaded_partners_meta' );
+add_action( 'cmb2_admin_init', 'startup_reloaded_partners_meta' );
 
 // Shortcode
 add_shortcode( 'partners', function( $atts, $content= null ){

@@ -1,9 +1,10 @@
 <?php
 /*
-Plugin Name: StartUp Partners
+Plugin Name: StartUp CPT Partners
 Description: Le plugin pour activer le Custom Post Partners
 Author: Yann Caplain
 Version: 0.1.0
+Text Domain: startup-cpt-partners
 */
 
 //GitHub Plugin Updater

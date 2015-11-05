@@ -143,9 +143,17 @@ function startup_reloaded_partners_meta() {
 add_action( 'cmb2_admin_init', 'startup_reloaded_partners_meta' );
 
 // Shortcode
-add_shortcode( 'partners', function( $atts, $content= null ){
-    ob_start();
-    require get_template_directory() . '/template-parts/content-partners.php';
-    return ob_get_clean();
-});
+function startup_reloaded_partners_shortcode( $atts ) {
+
+	// Attributes
+    $atts = shortcode_atts(array(
+            'bg' => '#6f6f6f'
+        ), $atts);
+    
+	// Code
+        ob_start();
+        require get_template_directory() . '/template-parts/content-partners.php';
+        return ob_get_clean();    
+}
+add_shortcode( 'partners', 'startup_reloaded_partners_shortcode' );
 ?>

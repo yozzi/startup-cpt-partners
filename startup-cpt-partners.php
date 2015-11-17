@@ -34,24 +34,25 @@ add_action( 'init', 'startup_reloaded_partners_updater' );
 //CPT
 function startup_reloaded_partners() {
 	$labels = array(
-		'name'                => _x( 'Partners', 'Post Type General Name', 'text_domain' ),
-		'singular_name'       => _x( 'Partner', 'Post Type Singular Name', 'text_domain' ),
-		'menu_name'           => __( 'Partners', 'text_domain' ),
-		'name_admin_bar'      => __( 'Partners', 'text_domain' ),
-		'parent_item_colon'   => __( 'Parent Item:', 'text_domain' ),
-		'all_items'           => __( 'All Items', 'text_domain' ),
-		'add_new_item'        => __( 'Add New Item', 'text_domain' ),
-		'add_new'             => __( 'Add New', 'text_domain' ),
-		'new_item'            => __( 'New Item', 'text_domain' ),
-		'edit_item'           => __( 'Edit Item', 'text_domain' ),
-		'update_item'         => __( 'Update Item', 'text_domain' ),
-		'view_item'           => __( 'View Item', 'text_domain' ),
-		'search_items'        => __( 'Search Item', 'text_domain' ),
-		'not_found'           => __( 'Not found', 'text_domain' ),
-		'not_found_in_trash'  => __( 'Not found in Trash', 'text_domain' )
+		'name'                => _x( 'Partners', 'Post Type General Name', 'startup-cpt-partners' ),
+		'singular_name'       => _x( 'Partner', 'Post Type Singular Name', 'startup-cpt-partners' ),
+		'menu_name'           => __( 'Partners', 'startup-cpt-partners' ),
+		'name_admin_bar'      => __( 'Partners', 'startup-cpt-partners' ),
+		'parent_item_colon'   => __( 'Parent Item:', 'startup-cpt-partners' ),
+		'all_items'           => __( 'All Items', 'startup-cpt-partners' ),
+		'add_new_item'        => __( 'Add New Item', 'startup-cpt-partners' ),
+		'add_new'             => __( 'Add New', 'startup-cpt-partners' ),
+		'new_item'            => __( 'New Item', 'startup-cpt-partners' ),
+		'edit_item'           => __( 'Edit Item', 'startup-cpt-partners' ),
+		'update_item'         => __( 'Update Item', 'startup-cpt-partners' ),
+		'view_item'           => __( 'View Item', 'startup-cpt-partners' ),
+		'search_items'        => __( 'Search Item', 'startup-cpt-partners' ),
+		'not_found'           => __( 'Not found', 'startup-cpt-partners' ),
+		'not_found_in_trash'  => __( 'Not found in Trash', 'startup-cpt-partners' )
 	);
 	$args = array(
-		'label'               => __( 'partners', 'text_domain' ),
+		'label'               => __( 'partners', 'startup-cpt-partners' ),
+        'description'         => __( '', 'startup-cpt-partners' ),
 		'labels'              => $labels,
 		'supports'            => array( 'title', 'revisions' ),
 		'hierarchical'        => true,
@@ -110,19 +111,19 @@ function startup_reloaded_partners_meta() {
 
 	$cmb_box = new_cmb2_box( array(
 		'id'            => $prefix . 'metabox',
-		'title'         => __( 'Partner details', 'cmb2' ),
+		'title'         => __( 'Partner details', 'startup-cpt-partners' ),
 		'object_types'  => array( 'partners' )
 	) );
     
 //    $cmb_box->add_field( array(
-//        'name' => __( 'Show title', 'cmb2' ),
+//        'name' => __( 'Show title', 'startup-cpt-partners' ),
 //		'id'               => $prefix . 'title',
 //		'type'             => 'checkbox',
 //        'default'          => 0
 //	) );
     
     $cmb_box->add_field( array(
-        'name' => __( 'Partner\'s logo', 'cmb2' ),
+        'name' => __( 'Partner\'s logo', 'startup-cpt-partners' ),
 		'id'   => $prefix . 'logo',
 		'type' => 'file',
         // Optionally hide the text input for the url:
@@ -132,7 +133,7 @@ function startup_reloaded_partners_meta() {
 	) );
     
     $cmb_box->add_field( array(
-		'name' => __( 'External url', 'cmb2' ),
+		'name' => __( 'External url', 'startup-cpt-partners' ),
 		'desc' => __( 'Link to te partner\'s website', 'startup-reloaded-products' ),
 		'id'   => $prefix . 'url',
 		'type' => 'text_url'

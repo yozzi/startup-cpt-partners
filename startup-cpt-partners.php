@@ -13,7 +13,7 @@ if ( ! defined( 'WPINC' ) ) {
 }
 
 //GitHub Plugin Updater
-function startup_reloaded_partners_updater() {
+function startup_cpt_partners_updater() {
 	include_once 'lib/updater.php';
 	//define( 'WP_GITHUB_FORCE_UPDATE', true );
 	if ( is_admin() ) {
@@ -34,10 +34,10 @@ function startup_reloaded_partners_updater() {
 	}
 }
 
-//add_action( 'init', 'startup_reloaded_partners_updater' );
+//add_action( 'init', 'startup_cpt_partners_updater' );
 
 //CPT
-function startup_reloaded_partners() {
+function startup_cpt_partners() {
 	$labels = array(
 		'name'                => _x( 'Partners', 'Post Type General Name', 'startup-cpt-partners' ),
 		'singular_name'       => _x( 'Partner', 'Post Type Singular Name', 'startup-cpt-partners' ),
@@ -78,18 +78,18 @@ function startup_reloaded_partners() {
 	register_post_type( 'partners', $args );
 }
 
-add_action( 'init', 'startup_reloaded_partners', 0 );
+add_action( 'init', 'startup_cpt_partners', 0 );
 
 //Flusher les permalink à l'activation du plgin pour qu'ils fonctionnent sans mise à jour manuelle
-function startup_reloaded_partners_rewrite_flush() {
-    startup_reloaded_partners();
+function startup_cpt_partners_rewrite_flush() {
+    startup_cpt_partners();
     flush_rewrite_rules();
 }
 
-register_activation_hook( __FILE__, 'startup_reloaded_partners_rewrite_flush' );
+register_activation_hook( __FILE__, 'startup_cpt_partners_rewrite_flush' );
 
 // Capabilities
-function startup_reloaded_partners_caps() {	
+function startup_cpt_partners_caps() {	
 	$role_admin = get_role( 'administrator' );
 	$role_admin->add_cap( 'edit_partner' );
 	$role_admin->add_cap( 'read_partner' );
@@ -106,13 +106,13 @@ function startup_reloaded_partners_caps() {
 	$role_admin->add_cap( 'edit_published_partners' );
 }
 
-register_activation_hook( __FILE__, 'startup_reloaded_partners_caps' );
+register_activation_hook( __FILE__, 'startup_cpt_partners_caps' );
 
 // Metaboxes
-function startup_reloaded_partners_meta() {
+function startup_cpt_partners_meta() {
     
 	// Start with an underscore to hide fields from custom fields list
-	$prefix = '_startup_reloaded_partners_';
+	$prefix = '_startup_cpt_partners_';
 
 	$cmb_box = new_cmb2_box( array(
 		'id'            => $prefix . 'metabox',
@@ -146,10 +146,10 @@ function startup_reloaded_partners_meta() {
 
 }
 
-add_action( 'cmb2_admin_init', 'startup_reloaded_partners_meta' );
+add_action( 'cmb2_admin_init', 'startup_cpt_partners_meta' );
 
 // Shortcode
-function startup_reloaded_partners_shortcode( $atts ) {
+function startup_cpt_partners_shortcode( $atts ) {
 
 	// Attributes
     $atts = shortcode_atts(array(
@@ -161,7 +161,50 @@ function startup_reloaded_partners_shortcode( $atts ) {
         require get_template_directory() . '/template-parts/content-partners.php';
         return ob_get_clean();    
 }
-add_shortcode( 'partners', 'startup_reloaded_partners_shortcode' );
+add_shortcode( 'partners', 'startup_cpt_partners_shortcode' );
+
+// Shortcode UI
+/**
+ * Detecion de Shortcake. Identique dans tous les plugins.
+ */
+if ( !function_exists( 'shortcode_ui_detection' ) ) {
+    function shortcode_ui_detection() {
+        if ( !function_exists( 'shortcode_ui_register_for_shortcode' ) ) {
+            add_action( 'admin_notices', 'shortcode_ui_notice' );
+        }
+    }
+
+    function shortcode_ui_notice() {
+        if ( current_user_can( 'activate_plugins' ) ) {
+            echo '<div class="error message"><p>Shortcode UI plugin must be active to use fast shortcodes.</p></div>';
+        }
+    }
+
+add_action( 'init', 'shortcode_ui_detection' );
+}
+
+function startup_cpt_partners_shortcode_ui() {
+
+    shortcode_ui_register_for_shortcode(
+        'partners',
+        array(
+            'label' => esc_html__( 'Partners', 'startup-cpt-partners' ),
+            'listItemImage' => 'dashicons-businessman',
+            'attrs' => array(
+                array(
+                    'label' => 'Background',
+                    'attr'  => 'bg',
+                    'type'  => 'color',
+                ),
+            ),
+        )
+    );
+};
+
+if ( function_exists( 'shortcode_ui_register_for_shortcode' ) ) {
+    add_action( 'init', 'startup_cpt_partners_shortcode_ui');
+}
+
 
 // Enqueue scripts and styles.
 function startup_cpt_partners_scripts() {

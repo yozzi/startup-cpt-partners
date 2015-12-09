@@ -192,7 +192,7 @@ function startup_cpt_partners_shortcode_ui() {
             'listItemImage' => 'dashicons-businessman',
             'attrs' => array(
                 array(
-                    'label' => 'Background',
+                    'label' => esc_html__( 'Background', 'startup-cpt-partners' ),
                     'attr'  => 'bg',
                     'type'  => 'color',
                 ),

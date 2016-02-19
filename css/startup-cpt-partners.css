@@ -22,9 +22,13 @@
     max-height: 140px;
 }
 
+.partner,.partner:hover,
 .partner a,.partner a:hover {
     color: #fff;
     text-decoration: none;
+}
+
+.partner,.partner:hover {
     text-transform: uppercase;
     font-weight: normal;
 }

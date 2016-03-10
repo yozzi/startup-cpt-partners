@@ -234,5 +234,5 @@ function startup_cpt_partners_scripts() {
     wp_enqueue_style( 'startup-cpt-partners-style', plugins_url( '/css/startup-cpt-partners.css', __FILE__ ), array( ), false, 'all' );
 }
 
-add_action( 'wp_enqueue_scripts', 'startup_cpt_partners_scripts' );
+add_action( 'wp_enqueue_scripts', 'startup_cpt_partners_scripts', 15 );
 ?>

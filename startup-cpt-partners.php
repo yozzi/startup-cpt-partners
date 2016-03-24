@@ -232,11 +232,38 @@ if ( function_exists( 'shortcode_ui_register_for_shortcode' ) ) {
     add_action( 'init', 'startup_cpt_partners_shortcode_ui');
 }
 
-
 // Enqueue scripts and styles.
 function startup_cpt_partners_scripts() {
     wp_enqueue_style( 'startup-cpt-partners-style', plugins_url( '/css/startup-cpt-partners.css', __FILE__ ), array( ), false, 'all' );
 }
 
 add_action( 'wp_enqueue_scripts', 'startup_cpt_partners_scripts', 15 );
+
+// Add code to footer
+function startup_cpt_partners_footer() { ?>
+    <script type="text/javascript">
+        $(document).ready(function() {
+
+            $('.carousel[data-type="multi"] .item').each(function(){
+                var next = $(this).next();
+                if (!next.length) {
+                    next = $(this).siblings(':first');
+                }
+                next.children(':first-child').clone().appendTo($(this));
+
+                for (var i=0;i<2;i++) {
+                    next=next.next();
+                    if (!next.length) {
+                        next = $(this).siblings(':first');
+                    }
+
+                    next.children(':first-child').clone().appendTo($(this));
+                }
+            });
+
+        });
+    </script>
+<?php }
+
+add_action( 'wp_footer', 'startup_cpt_partners_footer' );
 ?>

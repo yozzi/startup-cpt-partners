@@ -160,7 +160,8 @@ function startup_cpt_partners_shortcode( $atts ) {
 
 	// Attributes
     $atts = shortcode_atts(array(
-            'bg' => '#6f6f6f'
+            'bg' => '#6f6f6f',
+            'carousel' => ''
         ), $atts);
     
 	// Code
@@ -187,6 +188,11 @@ function startup_cpt_partners_shortcode_ui() {
                     'label' => esc_html__( 'Background', 'startup-cpt-partners' ),
                     'attr'  => 'bg',
                     'type'  => 'color',
+                ),
+                array(
+                    'label' => esc_html__( 'Carousel', 'startup-cpt-partners' ),
+                    'attr'  => 'carousel',
+                    'type'  => 'checkbox',
                 ),
             ),
         )

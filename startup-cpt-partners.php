@@ -213,22 +213,22 @@ add_action( 'wp_enqueue_scripts', 'startup_cpt_partners_scripts', 15 );
 // Add code to footer
 function startup_cpt_partners_footer() { ?>
     <script type="text/javascript">
-        $(document).ready(function() {
+        jQuery(document).ready(function() {
 
-            $('.carousel[data-type="multi"] .item').each(function(){
-                var next = $(this).next();
+            jQuery('.carousel[data-type="multi"] .item').each(function(){
+                var next = jQuery(this).next();
                 if (!next.length) {
-                    next = $(this).siblings(':first');
+                    next = jQuery(this).siblings(':first');
                 }
-                next.children(':first-child').clone().appendTo($(this));
+                next.children(':first-child').clone().appendTo(jQuery(this));
 
                 for (var i=0;i<2;i++) {
                     next=next.next();
                     if (!next.length) {
-                        next = $(this).siblings(':first');
+                        next = jQuery(this).siblings(':first');
                     }
 
-                    next.children(':first-child').clone().appendTo($(this));
+                    next.children(':first-child').clone().appendTo(jQuery(this));
                 }
             });
 

@@ -115,6 +115,51 @@ function startup_cpt_partners_caps() {
 
 register_activation_hook( __FILE__, 'startup_cpt_partners_caps' );
 
+// Category taxonomy
+function startup_cpt_partners_categories() {
+	$labels = array(
+		'name'                       => _x( 'Partner Categories', 'Taxonomy General Name', 'startup-cpt-team' ),
+		'singular_name'              => _x( 'Partner Category', 'Taxonomy Singular Name', 'startup-cpt-team' ),
+		'menu_name'                  => __( 'Partner Categories', 'startup-cpt-team' ),
+		'all_items'                  => __( 'All Items', 'startup-cpt-team' ),
+		'parent_item'                => __( 'Parent Item', 'startup-cpt-team' ),
+		'parent_item_colon'          => __( 'Parent Item:', 'startup-cpt-team' ),
+		'new_item_name'              => __( 'New Item Name', 'startup-cpt-team' ),
+		'add_new_item'               => __( 'Add New Item', 'startup-cpt-team' ),
+		'edit_item'                  => __( 'Edit Item', 'startup-cpt-team' ),
+		'update_item'                => __( 'Update Item', 'startup-cpt-team' ),
+		'view_item'                  => __( 'View Item', 'startup-cpt-team' ),
+		'separate_items_with_commas' => __( 'Separate items with commas', 'startup-cpt-team' ),
+		'add_or_remove_items'        => __( 'Add or remove items', 'startup-cpt-team' ),
+		'choose_from_most_used'      => __( 'Choose from the most used', 'startup-cpt-team' ),
+		'popular_items'              => __( 'Popular Items', 'startup-cpt-team' ),
+		'search_items'               => __( 'Search Items', 'startup-cpt-team' ),
+		'not_found'                  => __( 'Not Found', 'startup-cpt-team' )
+	);
+	$args = array(
+		'labels'                     => $labels,
+		'hierarchical'               => false,
+		'public'                     => true,
+		'show_ui'                    => true,
+		'show_admin_column'          => true,
+		'show_in_nav_menus'          => true,
+		'show_tagcloud'              => false
+	);
+	register_taxonomy( 'partners-category', array( 'partners' ), $args );
+
+}
+
+add_action( 'init', 'startup_cpt_partners_categories', 0 );
+
+// Retirer la boite de la taxonomie sur le coté
+function startup_cpt_partners_categories_metabox_remove() {
+	remove_meta_box( 'tagsdiv-partners-category', 'partners', 'side' );
+    // tagsdiv-product_types pour les taxonomies type tags
+    // custom_taxonomy_slugdiv pour les taxonomies type categories
+}
+
+add_action( 'admin_menu' , 'startup_cpt_partners_categories_metabox_remove' );
+
 // Metaboxes
 function startup_cpt_partners_meta() {
     
@@ -150,6 +195,15 @@ function startup_cpt_partners_meta() {
 		'id'   => $prefix . 'url',
 		'type' => 'text_url'
 	) );
+    
+     $cmb_box->add_field( array(
+		'name'     => __( 'Category', 'startup-cpt-partners' ),
+		'desc'     => __( 'Select the category(ies) of the partner', 'startup-cpt-partners' ),
+		'id'       => $prefix . 'category',
+		'type'     => 'taxonomy_multicheck',
+		'taxonomy' => 'partners-category', // Taxonomy Slug
+		'inline'  => true // Toggles display to inline
+	) );
 
 }
 
@@ -161,7 +215,10 @@ function startup_cpt_partners_shortcode( $atts ) {
 	// Attributes
     $atts = shortcode_atts(array(
             'bg' => '#6f6f6f',
-            'carousel' => ''
+            'carousel' => '',
+            'order' => '',
+            'cat' => '',
+            'id' => '',
         ), $atts);
     
 	// Code
@@ -193,6 +250,27 @@ function startup_cpt_partners_shortcode_ui() {
                     'label' => esc_html__( 'Carousel', 'startup-cpt-partners' ),
                     'attr'  => 'carousel',
                     'type'  => 'checkbox',
+                ),
+                array(
+                    'label' => esc_html__( 'Order', 'startup-cpt-partners' ),
+                    'attr'  => 'order',
+                    'type' => 'select',
+                    'options' => array(
+                        'menu_order' => esc_html__( 'Menu Order', 'startup-cpt-partners' ),
+                        'rand' => esc_html__( 'Random', 'startup-cpt-partners' )
+                    ),
+                ),
+                array(
+                    'label' => esc_html__( 'Category', 'startup-cpt-partners' ),
+                    'attr'  => 'cat',
+                    'type'  => 'text',
+                ),
+                array(
+                    'label' => esc_html__( 'ID', 'startup-cpt-partners' ),
+                    'attr'  => 'id',
+					'type' => 'post_select',
+					'query' => array( 'post_type' => 'partners' ),
+					'multiple' => false,
                 ),
             ),
         )
